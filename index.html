@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dominia — Marketing Digital & Automatización</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --gold-pale: rgba(201,168,76,0.08);
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #171717;
+  --white: #FAFAF8;
+  --gray: #888880;
+  --gray-light: #333330;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.25s ease;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 0.6rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-cta:hover { background: var(--gold-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 8rem 4rem 4rem;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 60%);
+}
+
+.hero-line {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3) 30%, rgba(201,168,76,0.3) 70%, transparent);
+  right: 35%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+
+.hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--gray);
+  max-width: 480px;
+  margin-bottom: 3rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(136,136,128,0.3);
+  padding-bottom: 2px;
+  transition: all 0.3s;
+}
+
+.btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+.hero-stats {
+  position: absolute;
+  right: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.stat {
+  text-align: right;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.stat:nth-child(1) { animation-delay: 0.6s; }
+.stat:nth-child(2) { animation-delay: 0.8s; }
+.stat:nth-child(3) { animation-delay: 1s; }
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 0.3rem;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 1rem 0;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-shrink: 0;
+}
+
+.marquee-item span { color: var(--gold); }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section { padding: 7rem 4rem; }
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.section-title em { font-style: italic; color: var(--gold); }
+
+/* ── COMO FUNCIONA ── */
+.process {
+  background: var(--dark);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+  margin-top: 4rem;
+}
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.process-step {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.process-step:hover .step-title { color: var(--gold); }
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: var(--gold);
+  opacity: 0.5;
+  min-width: 2rem;
+  padding-top: 0.2rem;
+}
+
+.step-content {}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+
+.step-desc {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+.process-visual {
+  position: sticky;
+  top: 8rem;
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 3rem;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-inner {
+  text-align: center;
+}
+
+.visual-score {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 6rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+
+.visual-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 1rem;
+}
+
+.visual-bar-wrap {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.visual-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bar-label {
+  font-size: 0.7rem;
+  color: var(--gray);
+  min-width: 4rem;
+  text-align: right;
+}
+
+.bar-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(201,168,76,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--gold);
+  animation: barGrow 1.5s ease forwards;
+  transform-origin: left;
+}
+
+@keyframes barGrow { from { width: 0; } }
+
+/* ── PLANES ── */
+.planes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 4rem;
+  background: rgba(201,168,76,0.1);
+}
+
+.plan-card {
+  background: var(--black);
+  padding: 3rem 2.5rem;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.plan-card:hover { background: var(--dark2); }
+
+.plan-card.featured {
+  background: var(--dark2);
+  border-top: 2px solid var(--gold);
+}
+
+.plan-badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.plan-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.plan-desc {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.plan-price {
+  margin-bottom: 2.5rem;
+}
+
+.price-setup {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.price-setup span {
+  font-size: 1rem;
+  color: var(--gray);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.price-monthly {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-top: 0.4rem;
+}
+
+.price-monthly strong { color: var(--gold-light); }
+
+.plan-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.plan-features li {
+  font-size: 0.82rem;
+  color: var(--gray);
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.plan-features li::before {
+  content: '—';
+  color: var(--gold);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.plan-cta {
+  display: block;
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  transition: all 0.3s;
+}
+
+.plan-cta:hover,
+.plan-card.featured .plan-cta {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+/* ── POR QUÉ DOMINIA ── */
+.why { background: var(--dark); }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.why-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.why-item {
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  display: flex;
+  gap: 2rem;
+}
+
+.why-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.why-title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.why-desc {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+.why-visual {
+  position: relative;
+}
+
+.why-card {
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 2.5rem;
+}
+
+.why-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  color: var(--gold-light);
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+}
+
+.metric-row:last-child { border-bottom: none; }
+
+.metric-name {
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.metric-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+/* ── CTA FINAL ── */
+.cta-section {
+  text-align: center;
+  padding: 8rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.cta-section .section-label { justify-content: center; }
+.cta-section .section-label::before { display: none; }
+
+.cta-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.cta-title em { font-style: italic; color: var(--gold); }
+
+.cta-sub {
+  font-size: 0.95rem;
+  color: var(--gray);
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.cta-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 3rem;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.cta-wa:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+.cta-wa svg { width: 20px; height: 20px; }
+
+.cta-note {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--gray);
+  position: relative;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(201,168,76,0.12);
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--dark);
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 0.7rem;
+  color: var(--gray);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--gold); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero-content .hero-tag { animation: fadeUp 0.6s ease 0.2s forwards; opacity: 0; }
+.hero-content .hero-title { animation: fadeUp 0.8s ease 0.3s forwards; opacity: 0; }
+.hero-content .hero-sub { animation: fadeUp 0.8s ease 0.5s forwards; opacity: 0; }
+.hero-content .hero-actions { animation: fadeUp 0.8s ease 0.6s forwards; opacity: 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 5rem 1.5rem; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .hero-stats { display: none; }
+  .hero-line { display: none; }
+  .process-grid { grid-template-columns: 1fr; }
+  .process-visual { display: none; }
+  .planes-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 5rem 1.5rem; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+  .footer-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">DOMINIA</a>
+  <ul class="nav-links">
+    <li><a href="#proceso">Cómo funciona</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+  </ul>
+  <a href="https://wa.me/593992965991" class="nav-cta">Hablar con nosotros</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Marketing Digital & Automatización — Ecuador</div>
+    <h1 class="hero-title">
+      Tu negocio<br>
+      <em>visible, creciendo</em><br>
+      y automatizado.
+    </h1>
+    <p class="hero-sub">
+      Digitalizamos negocios en Ecuador con tecnología de inteligencia artificial. 
+      Sitios web, redes sociales, SEO y automatizaciones que trabajan por ti las 24 horas.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/593992965991" class="btn-primary">Diagnóstico gratuito</a>
+      <a href="#planes" class="btn-ghost">Ver planes</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">1,500+</div>
+      <div class="stat-label">Negocios analizados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">30</div>
+      <div class="stat-label">Días a resultados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3×</div>
+      <div class="stat-label">Más ventas con presencia digital</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Sitios Web Profesionales <span>·</span> Google Maps <span>·</span> Instagram & TikTok <span>·</span> SEO Local <span>·</span> Bot de WhatsApp 24/7 <span>·</span> Sistema de Agendamiento <span>·</span> Automatización de Ventas <span>·</span> Reportes Mensuales <span>·</span></div>
+    <div class="marquee-item">Sitios Web Profesionales <span>·</span> Google Maps <span>·</span> Instagram & TikTok <span>·</span> SEO Local <span>·</span> Bot de WhatsApp 24/7 <span>·</span> Sistema de Agendamiento <span>·</span> Automatización de Ventas <span>·</span> Reportes Mensuales <span>·</span></div>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section class="process" id="proceso">
+  <div class="section-label">Proceso</div>
+  <h2 class="section-title">Así transformamos<br>tu <em>negocio</em></h2>
+  <div class="process-grid">
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Diagnóstico digital gratuito</div>
+          <div class="step-desc">Analizamos tu negocio con inteligencia artificial — presencia web, redes, posicionamiento en Google y oportunidades de crecimiento. En 30 minutos sabes exactamente qué te está costando clientes.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Propuesta a medida</div>
+          <div class="step-desc">No vendemos paquetes genéricos. Diseñamos una solución específica para tu negocio, industria y objetivos. Con precios claros y sin letra pequeña.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Implementación en 30 días</div>
+          <div class="step-desc">Tu web, redes, Google Maps y automatizaciones funcionando en menos de 30 días. Sin tecnicismos, sin complicaciones, sin perder tu tiempo.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Crecimiento continuo</div>
+          <div class="step-desc">Reportes mensuales con métricas reales. Ajustamos la estrategia con datos. Tú ves exactamente cuántos clientes nuevos estás captando cada mes.</div>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual">
+      <div class="visual-inner">
+        <span class="visual-score">85</span>
+        <div class="visual-label">Potencial de crecimiento digital</div>
+        <div class="visual-bar-wrap">
+          <div class="visual-bar">
+            <div class="bar-label">Web</div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%;animation-delay:0.3s;animation-fill-mode:forwards;animation: barGrow 1.5s 0.3s ease forwards"></div></div>
+          </div>
+          <div class="visual-bar">
+            <div class="bar-label">SEO</div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%;animation: barGrow 1.5s 0.6s ease forwards"></div></div>
+          </div>
+          <div class="visual-bar">
+            <div class="bar-label">Redes</div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%;animation: barGrow 1.5s 0.9s ease forwards"></div></div>
+          </div>
+          <div class="visual-bar">
+            <div class="bar-label">Auto.</div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%;animation: barGrow 1.5s 1.2s ease forwards"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes">
+  <div class="section-label">Inversión</div>
+  <h2 class="section-title">Planes diseñados<br>para <em>crecer</em></h2>
+  <div class="planes-grid">
+
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-desc">Para negocios que recién empiezan a digitalizarse</div>
+      <div class="plan-price">
+        <div class="price-setup">$200 <span>setup único</span></div>
+        <div class="price-monthly">+ <strong>$100 / mes</strong></div>
+      </div>
+      <ul class="plan-features">
+        <li>Página web profesional de 5 páginas</li>
+        <li>Perfil de Google Maps optimizado</li>
+        <li>1 red social gestionada — 8 posts/mes con diseño IA</li>
+        <li>Reporte mensual de métricas</li>
+        <li>Soporte por WhatsApp</li>
+      </ul>
+      <a href="https://wa.me/593992965991?text=Hola,%20me%20interesa%20el%20plan%20Starter" class="plan-cta">Empezar ahora</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-badge">Más popular</div>
+      <div class="plan-name">Crecimiento</div>
+      <div class="plan-desc">Para negocios que quieren crecer su audiencia y ventas</div>
+      <div class="plan-price">
+        <div class="price-setup">$350 <span>setup único</span></div>
+        <div class="price-monthly">+ <strong>$200 / mes</strong></div>
+      </div>
+      <ul class="plan-features">
+        <li>Todo del plan Starter</li>
+        <li>2 redes sociales — 16 posts/mes con diseño profesional</li>
+        <li>SEO básico y posicionamiento Google</li>
+        <li>Estrategia de contenido mensual personalizada</li>
+        <li>Análisis de competencia</li>
+        <li>Reporte avanzado de métricas</li>
+      </ul>
+      <a href="https://wa.me/593992965991?text=Hola,%20me%20interesa%20el%20plan%20Crecimiento" class="plan-cta">Empezar ahora</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Automatización</div>
+      <div class="plan-desc">Para negocios que quieren vender en piloto automático</div>
+      <div class="plan-price">
+        <div class="price-setup">$600 <span>setup único</span></div>
+        <div class="price-monthly">+ <strong>$400 / mes</strong></div>
+      </div>
+      <ul class="plan-features">
+        <li>Todo del plan Crecimiento</li>
+        <li>Bot de WhatsApp automático 24/7 — $130/mes</li>
+        <li>Sistema de agendamiento online — $60/mes</li>
+        <li>Respuestas automáticas en redes sociales</li>
+        <li>Dashboard de métricas en tiempo real</li>
+        <li>Soporte prioritario dedicado</li>
+      </ul>
+      <a href="https://wa.me/593992965991?text=Hola,%20me%20interesa%20el%20plan%20Automatizacion" class="plan-cta">Empezar ahora</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- POR QUÉ DOMINIA -->
+<section class="why" id="nosotros">
+  <div class="section-label">Por qué Dominia</div>
+  <h2 class="section-title">Tecnología que<br><em>trabaja</em> por ti</h2>
+  <div class="why-grid">
+    <div class="why-items">
+      <div class="why-item">
+        <div class="why-icon">IA</div>
+        <div>
+          <div class="why-title">Inteligencia Artificial aplicada</div>
+          <div class="why-desc">Usamos IA para analizar tu negocio, crear contenido, detectar oportunidades y optimizar tu presencia digital automáticamente.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📊</div>
+        <div>
+          <div class="why-title">Resultados medibles</div>
+          <div class="why-desc">Reportes mensuales con métricas reales. Sabes exactamente cuántos clientes nuevos captaste y qué está funcionando.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <div>
+          <div class="why-title">Implementación en 30 días</div>
+          <div class="why-desc">Sin meses de espera. Tu negocio digital funcionando en un mes o menos, sin complicaciones técnicas de tu parte.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🇪🇨</div>
+        <div>
+          <div class="why-title">Especialistas en Ecuador</div>
+          <div class="why-desc">Conocemos el mercado ecuatoriano. Estrategias diseñadas para el comportamiento de compra local, no copiadas de afuera.</div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-card">
+        <div class="why-card-title">Lo que consigues con Dominia</div>
+        <div class="metric-row">
+          <div class="metric-name">Clientes nuevos / mes</div>
+          <div class="metric-val">+15–40</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-name">Visibilidad en Google</div>
+          <div class="metric-val">Top 3</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-name">Tiempo de respuesta WhatsApp</div>
+          <div class="metric-val">24/7</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-name">Primeros resultados</div>
+          <div class="metric-val">30 días</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-name">Permanencia forzada</div>
+          <div class="metric-val">Ninguna</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Empezar</div>
+  <h2 class="cta-title">¿Listo para hacer<br>crecer tu <em>negocio</em>?</h2>
+  <p class="cta-sub">Diagnóstico gratuito de 30 minutos. Sin compromiso, sin tecnicismos.</p>
+  <a href="https://wa.me/593992965991?text=Hola,%20quiero%20un%20diagnostico%20gratuito%20para%20mi%20negocio" class="cta-wa">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Escribir por WhatsApp
+  </a>
+  <p class="cta-note">+593 99 296 5991 · Respondemos en menos de 1 hora · Lun–Sáb 8h00–20h00</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DOMINIA</div>
+  <div class="footer-copy">© 2026 Dominia · Cuenca, Ecuador</div>
+  <ul class="footer-links">
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="https://wa.me/593992965991">Contacto</a></li>
+  </ul>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 3 + 'px';
+  cursor.style.top = my - 3 + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx - 16 + 'px';
+  ring.style.top = ry - 16 + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(3)';
+    ring.style.opacity = '0';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    ring.style.opacity = '1';
+  });
+});
+
+// Bar animation on scroll
+const bars = document.querySelectorAll('.bar-fill');
+const targets = [85, 60, 75, 45];
+bars.forEach((bar, i) => {
+  bar.style.width = targets[i] + '%';
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.plan-card, .why-item, .process-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('modal-overlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('f-error').style.display = 'none';
+  document.getElementById('f-nombre').value = '';
+  document.getElementById('f-industria').value = '';
+  document.getElementById('f-ciudad').value = '';
+  document.getElementById('f-telefono').value = '';
+  document.getElementById('f-notas').value = '';
+  document.querySelectorAll('.fchip.on').forEach(c => c.classList.remove('on'));
+}
+function toggleFChip(el) { el.classList.toggle('on'); }
+function getChips() {
+  return [...document.querySelectorAll('#f-chips .fchip.on')].map(c => c.dataset.v);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a.btn-primary, a.nav-cta, a.cta-wa').forEach(a => {
+    a.removeAttribute('href');
+    a.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
+  const overlay = document.getElementById('modal-overlay');
+  if(overlay) overlay.addEventListener('click', e => {
+    if(e.target.id === 'modal-overlay') closeModal();
+  });
+});
+
+function enviarDiagnostico() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const industria = document.getElementById('f-industria').value.trim();
+  const ciudad = document.getElementById('f-ciudad').value.trim();
+  const telefono = document.getElementById('f-telefono').value.trim();
+  const notas = document.getElementById('f-notas').value.trim();
+  const presencia = getChips();
+  const err = document.getElementById('f-error');
+
+  if(!nombre || !industria || !ciudad || !telefono) {
+    err.style.display = 'block'; return;
+  }
+
+  const msg = `Hola Dominia, me interesa un diagnóstico gratuito para mi negocio.
+
+📋 *Mis datos:*
+• Negocio: ${nombre}
+• Industria: ${industria}
+• Ciudad: ${ciudad}
+• Teléfono: ${telefono}
+${presencia.length > 0 ? '• Presencia digital: ' + presencia.join(', ') : ''}
+${notas ? '• Mi reto principal: ' + notas : ''}
+
+¿Cuándo podemos agendar la demo gratuita?`;
+
+  const waUrl = 'https://wa.me/593992965991?text=' + encodeURIComponent(msg);
+  window.open(waUrl, '_blank');
+  closeModal();
+}
+</script>
+
+<!-- MODAL -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;backdrop-filter:blur(10px);overflow-y:auto;">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div style="background:#111111;border:1px solid rgba(201,168,76,0.25);width:100%;max-width:520px;padding:2.5rem;position:relative;">
+      <button onclick="closeModal()" style="position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;color:#888;font-size:1.1rem;cursor:pointer;">✕</button>
+
+      <div style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:#C9A84C;margin-bottom:0.8rem;">Diagnóstico gratuito</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;margin-bottom:0.4rem;">Analicemos tu negocio</h3>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1.8rem;line-height:1.6;">Completa estos datos y te contactamos en menos de 1 hora para agendar tu demo gratuita.</p>
+
+      <div style="display:flex;flex-direction:column;gap:0.9rem;">
+        <div>
+          <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">Nombre del negocio *</label>
+          <input id="f-nombre" type="text" placeholder="Ej. Consultorio Dental González" style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'" />
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;">
+          <div>
+            <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">Industria *</label>
+            <input id="f-industria" type="text" placeholder="Ej. spa, dental..." style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'" />
+          </div>
+          <div>
+            <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">Ciudad *</label>
+            <input id="f-ciudad" type="text" placeholder="Ej. Cuenca" style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'" />
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;">
+          <div>
+            <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">WhatsApp *</label>
+            <input id="f-telefono" type="text" placeholder="+593 99..." style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'" />
+          </div>
+          <div>
+            <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">Email (opcional)</label>
+            <input id="f-email" type="email" placeholder="tu@correo.com" style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'" />
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.5rem;">Presencia digital actual</label>
+          <div style="display:flex;flex-wrap:wrap;gap:0.45rem;" id="f-chips">
+            <span class="fchip" data-v="Sitio web" onclick="toggleFChip(this)">Sitio web</span>
+            <span class="fchip" data-v="Instagram" onclick="toggleFChip(this)">Instagram</span>
+            <span class="fchip" data-v="Facebook" onclick="toggleFChip(this)">Facebook</span>
+            <span class="fchip" data-v="TikTok" onclick="toggleFChip(this)">TikTok</span>
+            <span class="fchip" data-v="WhatsApp Business" onclick="toggleFChip(this)">WhatsApp Business</span>
+            <span class="fchip" data-v="Google Maps" onclick="toggleFChip(this)">Google Maps</span>
+            <span class="fchip" data-v="Ninguna" onclick="toggleFChip(this)">Ninguna</span>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:#888;display:block;margin-bottom:0.35rem;">¿Cuál es tu mayor reto para conseguir clientes?</label>
+          <textarea id="f-notas" placeholder="Ej. no aparezco en Google, poca gente me conoce..." style="width:100%;background:#0A0A0A;border:1px solid rgba(201,168,76,0.2);color:#FAFAF8;padding:0.7rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.83rem;outline:none;min-height:65px;resize:vertical;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'"></textarea>
+        </div>
+        <div id="f-error" style="display:none;font-size:0.76rem;color:#dc2626;padding:0.5rem;border:1px solid rgba(220,38,38,0.3);">Completa los campos obligatorios *</div>
+        <button onclick="enviarDiagnostico()" style="width:100%;padding:0.95rem;background:#C9A84C;color:#0A0A0A;font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;">Agendar demo gratuita por WhatsApp →</button>
+        <p style="font-size:0.68rem;color:#888;text-align:center;">Sin compromiso · Respondemos en menos de 1 hora · Tus datos son privados</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.fchip{font-size:0.7rem;padding:5px 11px;border:1px solid rgba(201,168,76,0.2);color:#888880;cursor:pointer;transition:all 0.2s;user-select:none}
+.fchip.on{border-color:#C9A84C;color:#C9A84C;background:rgba(201,168,76,0.08)}
+</style>
+</body>
+</html>
